@@ -6,6 +6,8 @@ vec_operator
 #1.b
 x <- 1:7
 x
+# the value of x is a sequence starting from 
+# 1 up to 7
  
 #2
 seq_vec <- seq(1, 3, by=0.2)
@@ -40,12 +42,20 @@ names(x)
 x[c("first", "third")]
 x
 
-
+#The result was a sequence that began with 1 and ended with 3.
+#the third argument is that for each number,
+# You must increase by 0.2.
 
 #5
 
 xSequence <- seq(-3:2)
 xSequence
+
+xSequence[2] <- 0 
+xSequence
+
+# the output is a new vector with the 2nd element
+# changed to zero
 
 #6
 
@@ -76,9 +86,95 @@ data
 
 power_ranking <-c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)
 
-celeb_name <-c("Tom Cruise","Rolling Stones","Oprah Winfrey","U2","Tiger Woods","Steven Spielberg", " Howard Stern", "50 cent", " Cast of the Sopranos"," Dan Brown"," Bruce Springsteen", "Donald Trump","Muhammad Ali", "Paul McCartney","George Lucas","Elton John", "David Letterman","Phil Mickelson","J.K. Rowling","Bradd Pitt","Peter Jackson","Dr. Phil McGraw","Jay Lenon","Celine Dion","Kobe Bryant")
+
+celebName <- c("Tom Cruise", "Rolling Stones", "Oprah Winfrey",
+                   
+                   "U2", "Tiger Woods", "Steven Spielberg",
+                   "Howard Stern", "50 Cent", "Cast of the Sopranos",
+                   "Dan Brown", "Bruce Springsteen", "Donald Trump",
+                   "Muhammad Ali", "Paul McCartney", "George Lucas",
+                   "Elton John", "David Letterman", "Phil Mickelson",
+                   "J.K Rowling", "Bradd Pitt", "Peter Jackson",
+                   "Dr. Phil McGraw", "Jay Lenon", "Celine Dion", "Kobe Bryant")
+
+celeb_pay <- c(67, 90, 225, 110, 90, 332, 302, 41, 52, 88, 55,
+               44, 55, 40, 244, 34, 40, 47, 75, 25, 39, 35, 32, 40, 31)
 
 
+celebrity <- data.frame(
+  power_ranking = powerRanking,
+  celebrity_name = celebrityName,
+  pay = celeb_pay
+)
+
+View(celebrity)
+
+# 8.b
+celebrity$power_ranking[celebrity$celebrity_name == "J.K Rowling"] <- 15
+celebrity$pay[celebrity$celebrity_name == "J.K Rowling"] <- 90
+celebrity
+
+View(celebrity)
+
+# 8.c
+
+write.csv(celebrity, "/cloud/project/PowerRanking.csv")
+
+PowerRanking <- read.csv("PowerRanking.csv")
+PowerRanking
+
+# 8.d
+
+n_rows <- celebrity[10:20,]
+save(n_rows, file="Ranks.RData")
+View(n_rows)
+
+# 8.e
+
+# selects rows 10 to 20 from the original data frame, 
+# saves the selected rows as Ranks.RData, and then prints the selected rows as the output.
+
+# -------------------------------------
+
+# 9.a
+
+# install.packages("readxl")
+library(readxl)
+excel_file <- read_excel("hotels-vienna.xlsx")
+excel_file
+View(excel_file)
+
+# 9.b
+
+dim_file <- dim(excel_file)
+dim_file
+
+# the output is 428 rows and 24 columns
+
+# 9.c
+colnames(excel_file)
+select_columns <- excel_file[,c("country", "neighbourhood", "price", "stars", "accommodation_type", "rating")]
+View(select_columns)
+
+# 9.d
+
+save(select_columns, file="new.RData")
+View(select_columns)
+
+# 9.e
+
+load("new.RData")
+select_coloumns
+
+first_six <- head(select_cols)
+last_six <- tail(select_cols)
+
+# --------------------------------------
+
+# 10.a
+
+vegtables <- list("Broccoli", "Cabbage", "Tomato", "Eggplant", "Peas")
+                ...
 
 
 
