@@ -1,0 +1,183 @@
+---
+title: "RWorksheet_ulgasan#3a.Rmd"
+output: pdf_document
+date: "2023-10-04"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r name, echo = TRUE}
+
+
+#1.a
+first11letters <- LETTERS[1:11]
+first11letters
+
+#1.b
+oddLetters <- length(LETTERS)
+oddnumletters <- LETTERS[seq(oddLetters) %% 2 == 1]
+oddnumletters
+
+#1.c
+vowelLetters <- LETTERS[c(1,5,9,15,21)]
+vowelLetters
+
+
+letters 
+
+#1.d
+
+last5letters <- letters[22:27]
+last5letters
+
+#1.e
+lettersbtwn <- letters[15:24]
+lettersbtwn
+
+
+#2
+
+city <-c("Tuguegarao City", "Manila", "Iloilo City", "Tacloban", "Samal Island",  "Davao City")
+cities
+
+temp <- c(42, 39, 34, 34, 30, 27)
+temp
+
+#2.a
+
+city_temp <- data.frame(city,temp)
+city_temp
+
+#2.c
+
+dframe <- data.frame(city,temp)
+dframe
+
+
+#2.d
+names(city_temp) <-c("City","Temperature")
+View(city_temp)
+
+#2.e
+str(city_temp)
+
+
+#2.f
+row_3 <- data[3]
+row_4 <- data[4]
+
+#2.g
+
+data <- data.frame(
+  City = c("Tuguegarao City", "Manila", "Iloilo City", "Tacloban", "Samal Island", "Davao City"),
+  Temperature = c(42, 39, 34, 34, 30, 27)
+)
+
+
+highest_temp_index <- which.max(data$Temperature)
+highest_temp_index
+
+lowest_temp_index <- which.min(data$Temperature)
+lowest_temp_index
+
+city_highest_temp <- data$City[highest_temp_index]
+city_highest_temp
+
+city_lowest_temp <- data$City[lowest_temp_index]
+city_lowest_temp
+
+
+#Matrix
+
+#2
+matrix_data <- c(1:8, 11:14)
+matrix_result <- matrix(matrix_data, nrow = 3, ncol = 4, byrow = TRUE)
+
+print("Resulting matrix:")
+print(matrix_result)
+
+#2.b
+multiplied_matrix <- matrix_result * 2
+multiplied_matrix
+
+#2.c
+row_2_content <- matrix_result[2]
+row_2_content
+
+#2.d
+columns_3_4_row_1 <- matrix_result[1, 3:4]
+columns_3_4_row_1
+
+columns_3_4_row_2 <- matrix_result[2, 3:4]
+columns_3_4_row_2
+
+#2.e
+columns_2_3_row_3 <- matrix_result[3, 2:3]
+columns_2_3_row_3
+
+#2.f
+column_4_all_rows <- matrix_result[, 4]
+column_4_all_rows
+
+#2.g
+print(reshaped_matrix)
+
+
+
+rownames(matrix_result) <- c("isa", "dalawa", "tatlo")
+colnames(matrix_result) <- c("uno", "dos", "tres", "quatro")
+
+
+print("Matrix with row and column names:")
+print(matrix_result)
+
+#2.g
+
+reshaped_matrix <- matrix_result
+dim(reshaped_matrix) <- c(6, 2)
+
+print("Reshaped matrix with 2 columns and 6 rows:")
+print(reshaped_matrix)
+
+#ARRAYS
+
+#3.a
+
+numeric_values <- c(1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1)
+repeated_values <- rep(numeric_values, each = 2)
+three_dim_array <- array(repeated_values, dim = c(2, 4, 3))
+
+
+print("Three-dimensional array with 4 columns and 2 rows:")
+print(three_dim_array)
+
+#3.b
+array_dimensions <- dim(three_dim_array)
+array_dimensions
+
+#3.c
+
+row_names <- letters[1:2]
+col_names <- LETTERS[1:4]
+
+rownames(three_dim_array) <- row_names
+colnames(three_dim_array) <- col_names
+
+
+dim_names <- c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array")
+dimnames(three_dim_array) <- list(row_names, col_names, dim_names)
+
+print("Array with updated names:")
+print(three_dim_array)
+
+
+
+```
+
+
+
+
+
+
