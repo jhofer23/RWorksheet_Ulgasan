@@ -10,7 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r name, echo = TRUE}
 
-
 #1.a
 first11letters <- LETTERS[1:11]
 first11letters
@@ -40,7 +39,7 @@ lettersbtwn
 #2
 
 city <-c("Tuguegarao City", "Manila", "Iloilo City", "Tacloban", "Samal Island",  "Davao City")
-cities
+city
 
 temp <- c(42, 39, 34, 34, 30, 27)
 temp
