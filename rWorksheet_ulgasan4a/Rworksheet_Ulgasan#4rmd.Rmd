@@ -71,8 +71,10 @@ householdData <- data.frame(
 print(new_order_data)
 
  #5
-import_table <- read.table(file=  "/cloud/project/rWorksheet_ulgasan4a" )
-import_table    
+  
+imported_table <- read.table(file = "/cloud/project/worksheet4/import_march.csv", header = TRUE, sep = ",")
+
+View(imported_table)
 
 
 #6
@@ -172,28 +174,15 @@ for (i in 1:length(test_scores)) {
 #8.d
 
 
-students = (
-    {'name': 'Annie', 'grades': ([88, 95, 92, 85]),
-    {'name': 'John', 'grades': [75, 80, 90, 91]),
-    {'name': 'Lisa', 'grades': [80, 88, 90, 80]},
-    {'name': 'Tim', 'grades': [92, 95, 93, 91]}
-)
+HighestScores <- apply(Math[, 2:5], 1, function(x) sort(x, decreasing = TRUE)[1])
 
-
-for student in students:
-    highest_score = student['grades'][0]
-    
-    
-    for grade in student['grades'][1:]:
-
-        if grade > highest_score:
-            highest_score = grade
-    
-
-
-    if highest_score > 90:
-        print(f"{student['name']}'s highest grade this semester is {highest_score}.")
-
+StudentsHeighestAbove90 <- Math[HighestScores > 90, ]
+for (i in 1:nrow(StudentsHeighestAbove90)) {
+  paste(sprintf("%s's highest grade this semester is %d.\n",
+              StudentsHeighestAbove90[i, "Name"],
+              HighestScores[HighestScores > 90][i]))
+}
+HighestScores
 
 
 
