@@ -25,6 +25,7 @@ householdData <- data.frame(
 )
 
   householdData
+  write.csv(householdData,"househouldData.csv")
   
   
   

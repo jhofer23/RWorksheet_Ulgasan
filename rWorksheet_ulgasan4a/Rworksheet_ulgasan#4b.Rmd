@@ -1,42 +1,42 @@
 ---
 title: "RWorksheet_Ulgasan#4b"
-output: pdf_document
+output:
+  pdf_document: default
 date: "2023-11-08"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 1.Using the for loop, create an R script that will display a 5x5 matrix as shown in
 Figure 1. It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
 
 ```{r name, echo = TRUE}
 
-#vectorZero <- c(0,0,0,0,0)
-#matrixVec <- c(vectorZero, 5,5)
-#vectorA <-c(1,2,3,4,5)
+
+vectorA <- c(1, 2, 3, 4, 5)
+matrixA <- matrix(0, nrow = 5, ncol = 5)
+
+cat("Initial Matrix:\n")
+print(matrixA)
+for (i in 1:5) {
+  matrixA[i, ] <- vectorA * i
+}
 
 
-vectorA <- c(1,2,3,4,5)
+cat("\nFinal Matrix:\n")
+matrixA
 
-
-zeroMatrix <- matrix(0, nrow = 5, ncol = 5)
-
-
-print(vectorA)
-print(zeroMatrix)
 
 ```
 2.2. Print the string "*" using for() function. The output should be the same as shown
 in Figure
 
 
-
 ```{r name, echo = TRUE}
 
 
-##33
+
 for(i in 1:5){
   asterisk <- rep("*", i)
   print(asterisk)
@@ -138,7 +138,7 @@ barplot(totalMaleFemale,
         col = c("red", "black"),
         legend.text = rownames(totalMaleFemale),
         beside = TRUE)
-        
+     
 
 
 ```
@@ -258,5 +258,125 @@ title = "Species")
 
 ```
 
+7a. Rename the white and black variants by using gsub() function.
 
+```{r name, echo = TRUE}
+library(readxl)
+
+
+alexa_file <- read_excel("alexa_file.xlsx")
+View(alexa_file)
+alexa_file
+
+
+
+
+alexa_file$variation <- gsub("Black  Dot", "BlackDot", alexa_file$variation)
+alexa_file$variation <- gsub("Black  Plus", "BlackPlus", alexa_file$variation)
+alexa_file$variation <- gsub("Black  Show", "BlackShow", alexa_file$variation)
+alexa_file$variation <- gsub("White  Plus", "WhitePlus", alexa_file$variation)
+
+
+alexa_file$variation <- gsub("White  Show", "WhiteShow", alexa_file$variation)
+alexa_file$variation <- gsub("White  Spot", "WhiteSpot", alexa_file$variation)
+View(alexa_file)
+alexa_file
+```
+7.bGet the total number of each variations and save it into another object. Save the
+object as variations.RData. Write the R scripts. What is its result?
+
+```{r name, echo = TRUE}
+
+
+
+# Load required library
+library(dplyr)
+
+#
+variation_counts <- df %>%
+  group_by(variation) %>%
+  summarise(count = n())
+
+save(variation_counts, file = "variations.RData")
+
+
+print(variation_counts)
+
+
+load("variations.RData")
+
+
+
+```
+7c. From the variations.RData, create a barplot(). Complete the details of the chart
+which include the title, color, labels of each bar.
+```{r name, echo = TRUE}
+barplot(variation_counts$count, 
+        names.arg = variation_counts$variation,
+        col = "skyblue",
+        main = "Variation Counts",
+        xlab = "Variation",
+        ylab = "Count")
+
+# Add labels
+text(x = barplot(variation_counts$count, 
+                 names.arg = variation_counts$variation,
+                 col = "skyblue", 
+                 main = "Variation Counts",
+                 xlab = "Variation",
+                 ylab = "Count", 
+                 ylim = c(0, max(variation_counts$count) + 1),
+                 space = 0.3), 
+     y = variation_counts$count, 
+     label = variation_counts$count, 
+     pos = 3, 
+     col = "black")
+
+# Add a legend
+legend("topright", legend = "Count", fill = "skyblue", border = NA)
+
+
+
+```
+7d. Create a barplot() for the black and white variations. Plot it in 1 frame, side by
+side. Complete the details of the chart.
+
+
+```{r name, echo = TRUE}
+
+
+library(ggplot2)
+
+{r}
+par(mfrow = c(1,2))
+black <- data.frame(
+ variation = c("black", "black plus", " black show","black spot ", "black dot" ),
+ n = c(261, 270, 265, 241, 516)
+)
+
+
+barplot_black <- ggplot(black, aes(x = variation, y = n, fill = variation)) +
+ geom_bar(stat = "identity", position = "dodge") +
+ geom_text(aes(label = n), position = position_dodge(width = 0.5), vjust = -0.9) +
+ scale_fill_manual(values = c("black", "pink","green","blue", "skyblue")) +
+ theme_minimal() +
+ labs(title = "Black Variations", x = "Variation", y = "Count")
+
+
+white <- data.frame(
+  variation = c("white", "white dot", "white plus", "white show", "white spot"),
+  n = c(261, 516, 231, 261,320 )
+)
+
+barplot_white <- ggplot(white, aes(x = variation, y = n, fill = variation)) +
+ geom_bar(stat = "identity", position = "dodge") +
+ geom_text(aes(label = n), position = position_dodge(width = 0.5), vjust = -0.9) +
+ scale_fill_manual(values = c("black", "pink","green","blue", "skyblue")) +
+ theme_minimal() +
+ labs(title = "White Variations", x = "Variation", y = "Count")
+  
+  barplot_white
+  barplot_black
+
+```
 
