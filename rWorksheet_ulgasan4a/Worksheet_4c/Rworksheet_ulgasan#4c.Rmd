@@ -1,0 +1,97 @@
+---
+title: "Rworksheet_Ulgasan#4c"
+output: pdf_document
+date: "2023-11-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+1. Use the dataset mpg
+• Download and open the mpg file. Upload it to your OWN environment
+a. Show your solutions on how to import a csv file into the environment.
+
+
+```{r}
+
+
+library(readr)
+mpg <- read_csv("rWorksheet_ulgasan4a/Worksheet_4c/mpg.csv")
+mpg
+View(mpg)
+```
+b. Which variables from mpg dataset are categorical?
+```{r}
+
+
+
+
+mpg <- read.csv('rWorksheet_ulgasan4a/Worksheet_4c/mpg.csv')
+
+head(mpg)
+
+str(mpg)
+
+```
+c. Which are continuous variables?
+
+```{r}
+
+
+str(mpg$displ)
+str(mpg$year)
+str(mpg$cyl)
+str(mpg$trans)
+str(mpg$drv)
+str(mpg$cty)
+str(mpg$hwy)
+
+
+```
+2. Which manufacturer has the most models in this data set? Which model has the most variations?
+Show your answer
+```{r}
+
+
+data(mpg)
+
+
+manufacturer_table <- table(mpg$manufacturer)
+
+
+max_manufacturer <- as.character(names(manufacturer_table)[which.max(manufacturer_table)])
+print(paste("The manufacturer with the most models is '", max_manufacturer, "'."))
+
+
+model_table <- table(mpg$model)
+max_model <- as.character(names(model_table)[which.max(model_table)])
+print(paste("The model with the most variations is '", max_model, "'."))
+
+
+```
+2a. Group the manufacturers and find the unique models. Show your codes and result.
+```{r}
+
+data(mpg)
+
+
+grouped_models <- aggregate(mpg$model, by=list(manufacturer=mpg$manufacturer), unique)
+print(grouped_models)
+
+
+```
+2b. Graph the result by using plot() and ggplot(). Write the codes and its result
+```{r}
+
+manufacturer_counts <- table(grouped_models$manufacturer)
+manufacturer_proportions <- manufacturer_counts / sum(manufacturer_counts)
+
+
+pie(manufacturer_proportions, labels=names(manufacturer_proportions), main="Proportion of Unique Models by Manufacturer")
+
+
+
+
+```
+
+
