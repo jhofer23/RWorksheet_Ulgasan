@@ -1,0 +1,263 @@
+---
+title: "RWork_sheetUlgasan#4.aRmd"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+date: "2023-10-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1
+```{r}
+shoeSize <- c(6.5,9.0,8.5,8.5,10.5,7.0,9.5,9.0,13.0,7.5,10.5,8.5,12.0,10.5,13.0,11.5,8.5,5.0,10.0,6.5,7.5,8.5,10.5,11.0,9.0,13.0)
+
+height <-c(66.0,68.0,64.5,65.0,70.0,71.0,72.0,64.0,74.5,67.0,71.0,71.0,77.0,72.0,59.0,62.0,72.0,66.0,64.0,67.0,73.0,69.0,72.0,70.0,69.0,70.0)
+
+gender <-c("F","F","F","F","M","F","F","F","M","F","M","F","M","M","M","M","F","F","M","F","F","M","M","F","M","M","M","M")
+
+length(height)
+
+```
+
+#1
+
+
+```{r}
+househouldData <- data.frame(  
+  
+  ShoeSize = c(6.5,9.0,8.5,8.5,10.5,7.0,9.5,9.0,13.0,7.5,10.5,8.5,12.0,10.5,13.0,11.5,8.5,5.0,10.0,6.5,7.5,8.5,10.5,11.0,9.0,13.0),
+
+  
+  Height = c(66.0,68.0,64.5,65.0,70.0,71.0,72.0,64.0,74.5,67.0,71.0,71.0,77.0,72.0,59.0,62.0,72.0,66.0,64.0,67.0,73.0,69.0,72.0,70.0,69.0,70.0),
+  
+  Gender = c("F","F","F","F","M","F","F","F","M","F","M","F","M","M","M","M","F","F","M","F","F","M","M","F","M","M")
+)
+
+```
+  
+  
+  
+#1.c
+```{r}
+  meanofShosize <-mean(shoeSize)
+  meanofShosize
+  
+  meanofHeight <-mean(height)
+  meanofHeight
+```
+  
+  
+  
+  
+#2
+```{r}
+
+ Months <- c("March","April","January","November","January",
+"September","October","September","November","August",
+"January","November","November","February","May","August","July","December","August","August","September","November","February","April")
+ Months  
+  
+  
+  Factor_months <- factor(Months)
+  Factor_months
+```
+  
+#3
+  
+```{r}
+  summaryofMonths <- summary(Months)
+  summaryofMonths
+  
+  summary(Factor_months)
+```
+  
+#4
+  
+```{r}  
+  direction <- c("East","West","North")
+  direction
+  
+  frequency <- c(1,4,3)
+  frequency
+  
+  factor_data <- factor(c(direction,frequency))
+  factor_data
+  
+  new_order_data <- factor(factor_data,levels = c("East","West","North"))
+print(new_order_data)
+```
+
+#5
+```{r}
+  
+imported_table <-read.table(file = "/cloud/project/rWorksheet_ulgasan4a/Worksheet_4a/import_march.csv", header = TRUE, sep = ",")
+
+
+
+```
+
+
+#6
+# Function to check if number is within range and display appropriate output
+```{r}
+check_number <- function(input_number) {
+ if (input_number < 1 || input_number > 50) {
+    return("The number selected is beyond the range of 1 to 50")
+ } else if (input_number == 20) {
+    return(TRUE)
+ } else {
+    return(input_number)
+ }
+}
+
+# Input number from user
+#input_number <- as.integer(readline("Enter a number between 1 and 50: "))
+
+# Check and display appropriate output
+#result <- check_number(input_number)
+#cat(result, "\n")
+```
+
+#7
+
+```{r}
+print_min_bills <- function(snack_price) {
+
+ num_of_bills <- 0
+ bill_values <- c(1000, 500, 200, 100, 50)
+  
+ for (bill_value in bill_values) {
+    while (snack_price >= bill_value) {
+      num_of_bills <- num_of_bills + 1
+      snack_price <- snack_price - bill_value
+    }
+ }
+  
+ return(num_of_bills)
+}
+
+
+snack_price <- 350 # example value
+
+# Call the function and print the result
+print(print_min_bills(snack_price))
+```
+
+```{r}
+#8.a
+
+students <-data.frame(
+  
+  name = c("Annie","Thea","Steve","Hanna"),
+  grades1 = c(85,65,75,95),
+  grades2 = c(65,75,55,75),
+  grades3 = c(85,90,80,100),
+  grades4 = c(100,90,85,90)
+)
+print(students)
+```
+
+#8.b
+```{r}
+
+students$Math_Score_Avg <- rowMeans(students[, 2:5])
+
+
+students$Average_Grade <- apply(students[, 2:5], 1, mean)
+
+
+filtered_students <- students[students$Math_Score_Avg > 90, ]
+
+
+for (i in 1:nrow(filtered_students)) {
+ cat(filtered_students$Name[i], "'s average grade this semester is ",
+      round(filtered_students$Average_Grade[i], 2), ".", sep = "")
+ cat("\n")
+}
+```
+
+#8.c
+```{r}
+
+test_scores <- list(
+ c(90, 92, 94, 95), # test 1
+ c(80, 85, 87, 88), # test 2
+ c(75, 78, 80, 82), # test 3
+ c(60, 65, 68, 70) # test 4
+)
+
+
+for (i in 1:length(test_scores)) {
+ average_score <- sum(test_scores[[i]]) / length(test_scores[[i]])
+  
+
+ if (average_score < 80) {
+    cat("The", i, "nth test was difficult.\n")
+ }
+}
+```
+#8.d
+
+```{r}
+
+# Data
+grades <- data.frame(
+  Name = c("Annie", "Thea", "Steve", "Hanna"),
+  Grade1 = c(85, 65, 75, 95),
+  Grade2 = c(65, 75, 55, 75),
+  Grade3 = c(85, 90, 80, 100),
+  Grade4 = c(100, 90, 85, 90)
+)
+
+
+for (i in 1:nrow(grades)) {
+  student <- grades$Name[i]
+  student_grades <- grades[i, -1] 
+  
+  highest_grade <- 0
+  
+  
+  for (grade in student_grades) {
+    if (grade > highest_grade) {
+      highest_grade <- grade
+    }
+  }
+  
+
+  if (highest_grade > 90) {
+    cat(paste(student, "'s highest grade this semester is ", highest_grade, ".\n"))
+  }
+}
+
+
+
+
+```
+
+  
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+        
+
+
