@@ -78,20 +78,237 @@ data(mpg)
 grouped_models <- aggregate(mpg$model, by=list(manufacturer=mpg$manufacturer), unique)
 print(grouped_models)
 
-
+View(grouped_models)
 ```
 2b. Graph the result by using plot() and ggplot(). Write the codes and its result
 ```{r}
 
-manufacturer_counts <- table(grouped_models$manufacturer)
-manufacturer_proportions <- manufacturer_counts / sum(manufacturer_counts)
 
 
-pie(manufacturer_proportions, labels=names(manufacturer_proportions), main="Proportion of Unique Models by Manufacturer")
+
+df <- data.frame(vehicle_type = c("car", "car", "truck", "truck"),
+                 hwy = c(30, 35, 25, 27),
+                 cty = c(18, 20, 15, 17))
+
+
+df$mpg <- ifelse(df$vehicle_type == "car", 
+                 (df$cty + df$hwy) / 2, 
+                 df$hwy)
+
+
+library(ggplot2)
+
+ggplot(df, aes(x = vehicle_type, y = mpg, fill = vehicle_type)) +
+ geom_bar(stat = "identity", position = "dodge") +
+ labs(title = "Miles per Gallon (mpg) for Cars and Trucks",
+       x = "Vehicle Type",
+       y = "Miles per Gallon (mpg)") +
+ theme_minimal()
+
+
+
+```
+2.Same dataset will be used. You are going to show the relationship of the modeland the manufacturer.
+
+```{r}
+
+
+library(ggplot2)
+
+
+ggplot(mpg, aes(x = manufacturer, y = model)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Relationship between Model and Manufacturer",
+       x = "Manufacturer",
+       y = "Model")
+
+
+
+```
+2a. What does ggplot(mpg, aes(model, manufacturer)) + geom_point() show?
+
+
+```{r}
+
+#X-axis (horizontal): Car models.
+#Y-axis (vertical): Car manufacturers.
+#Points: Each point on the plot represents a specific car model and its corresponding manufacturer in the mpg dataset.
+
+
+#This plot provides a visual representation of how different car models are distributed across various manufacturers. Each point on the plot indicates a pairing of a specific car model with its manufacturer. It's a way to explore the relationships and patterns in the data. If there are a lot of points, you might see overlapping, and adjusting the plot (for example, using jitter or other techniques) could enhance readability.
+
+```
+2b. For you, is it useful? If not, how could you modify the data to make it more informative?
+```{r}
+
+ggplot(mpg, aes(x = model, y = manufacturer, color = fl)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Relationship between Model, Manufacturer, and Fuel Type",
+       x = "Model",
+       y = "Manufacturer")
+
+
+```
+
+3. Plot the model and the year using ggplot(). Use only the top 20 observations. Write the codes and
+its results.
+
+```{r}
+
+
+
+library(ggplot2)
+
+
+ggplot(head(mpg, 20), aes(x = model, y = year)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
+  labs(title = "Relationship between Model and Year (Top 20 Observations)",
+       x = "Model",
+       y = "Year")
+ 
+
+```
+4. Using the pipe (%>%), group the model and get the number of cars per model. Show codes and its result
+
+
+```{r}
+
+library(dplyr)
+
+car_counts <- mpg %>%
+  group_by(model) %>%
+  summarize(number_of_cars = n())
+
+print(car_counts)
+
+
+
+```
+4a. Plot using geom_bar() using the top 20 observations only. The graphs shoudl have a title, labels and
+colors. Show code and results.
+
+```{r}
+
+top_20 <- head(mpg, 20)
+
+
+barplot(table(top_20$model),
+        main = "Number of Cars per Model (Top 20 Observations)",
+        xlab = "Model",
+        ylab = "Number of Cars",
+        col = rainbow(length(unique(top_20$model))))
+
+legend("topright", legend = levels(factor(top_20$model)), fill = rainbow(length(unique(top_20$model))))
+
+
+
+```
+4b. Plot using the geom_bar() + coord_flip() just like what is shown below. Show codes and its result.
+```{r}
+
+
+library(ggplot2)
+
+
+ggplot(head(mpg, 20), aes(x = model)) +
+  geom_bar() +
+  coord_flip() +
+  labs(title = "Number of Cars per Model (Top 20 Observations)",
+       x = "Model",
+       y = "Number of Cars")
+      
+
+
+```
+5. Plot the relationship between cyl - number of cylinders and displ - engine displacement using
+geom_point with aesthetic color = engine displacement. Title should be “Relationship between
+No. of Cylinders and Engine Displacement”.
+
+```{r}
+
+
+
+library(ggplot2)
+
+
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders",
+       y = "Engine Displacement")
+
+```
+
+5a. How would you describe its relationship? Show the codes and its result
+
+```{r}
+
+
+summary(mpg[c("cyl", "displ")])
+
+
+cor(mpg$cyl, mpg$displ)
+
+plot(mpg$cyl, mpg$displ, main = "Scatter Plot: Cylinders vs. Engine Displacement",
+     xlab = "Number of Cylinders", ylab = "Engine Displacement")
+abline(lm(displ ~ cyl, data = mpg), col = "red")
+
+
+
+```
+6. Plot the relationship between displ (engine displacement) and hwy(highway miles per gallon). Mapped
+it with a continuous variable you have identified in #1-c. What is its result? Why it produced such
+output?
+
+
+```{r}
+
+
+library(ggplot2)
+
+
+ggplot(mpg, aes(x = displ, y = hwy, color = cyl)) +
+  geom_point() +
+  labs(title = "Relationship between Engine Displacement and Highway MPG",
+       x = "Engine Displacement",
+       y = "Highway MPG")
+
+
+```
+
+6. Import the traffic.csv onto your R environment.
+
+```{r}
+
 
 
 
 
 ```
+6.b
+
+```{r}
+
+
+```
+6.c
+```{r}
+
+
+
+
+```
+7b.From alexa_file.xlsx, import it to your environment
+
+```{r}
+
+
+
+
+```
+
 
 
